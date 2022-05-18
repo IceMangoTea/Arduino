@@ -1,0 +1,31 @@
+#include <math.h>
+#include "rgb_lcd.h"
+rgb_lcd lcd;
+const int colorR = 255;
+const int colorG = 255;
+const int colorB = 255;
+const int B = 4275; // B value of the thermistor
+const int R0 = 100000; // R0 = 100k
+const int TempSensor = A0; // Grove - Temperature Sensor connect to A0
+void setup()
+{
+lcd.begin(16, 2);
+lcd.setRGB(colorR, colorG, colorB);
+lcd.print("Displaying temp!");
+delay(1000);
+}
+
+void loop()
+{
+int a = analogRead(TempSensor);
+float R = (1023.0/a-1.0)*R0;
+// convert to deg C via datasheet
+float temperature = 1.0/(log(R/R0)/B+1/298.15)-273.15;
+lcd.setCursor(0, 1);
+lcd.print(temperature);
+lcd.setRGB(0, 255, 0);
+delay(1000);
+lcd.setRGB(0, 0, 255);
+delay(1000);
+
+}
