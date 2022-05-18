@@ -1,0 +1,38 @@
+#include <rgb_lcd.h>
+
+#include "rgb_lcd.h"
+rgb_lcd lcd;
+String sentence = "VERNON SEW";
+
+void setup() {
+ // set up the LCD's number of columns and rows
+ lcd.begin(16, 2);
+ // print a message to the LCD
+ lcd.print(sentence);
+ delay(500);
+}
+void loop() {
+ // scroll left 13 positions (string length) to move offscreen
+ for (int positionCounter = 0; positionCounter < 13; positionCounter++){
+ // scroll one position left:
+ lcd.scrollDisplayLeft();
+ // wait a bit:
+ delay(150);
+ }
+ // scroll right 29 positions (string length + display length) to move offscreen
+ for (int positionCounter = 0; positionCounter < 29; positionCounter++) {
+ // scroll one position right:
+ lcd.scrollDisplayRight();
+ // wait a bit:
+ delay(150);
+ }
+ // scroll left 16 (display length + string length) to move it back to start
+ for (int positionCounter = 0; positionCounter < 16; positionCounter++) {
+ // scroll one position left:
+ lcd.scrollDisplayLeft();
+ // wait a bit:
+ delay(150);
+ }
+ // delay at the end of the full loop:
+ delay(1000);
+}
