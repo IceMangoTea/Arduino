@@ -1,0 +1,19 @@
+int incomingByte;
+String sentence;
+
+void setup() {
+
+  Serial.begin(9600);
+
+}
+
+void loop() {
+
+  if (Serial.available() >0){
+    sentence = Serial.readString();
+    Serial.print( "total num of characters: ");
+    incomingByte = sentence.length();
+    Serial.println(incomingByte - 1);
+  }
+
+}
