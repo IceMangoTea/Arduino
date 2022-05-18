@@ -1,0 +1,25 @@
+#include <Servo.h>
+#include "rgb_lcd.h"
+rgb_lcd lcd;
+Servo myservo;
+int potpin = 0; 
+int val;
+void setup() {
+  lcd.begin(16, 2);
+  lcd.setRGB(0, 250, 0);
+  lcd.print("Angle");
+  delay(100);
+  myservo.attach(9);
+}
+void loop() {
+  val = analogRead(potpin); 
+  val = map(val, 0, 1023, 0, 180);
+  myservo.write(val); 
+  delay(15);
+  lcd.setRGB(0,250,0);
+  lcd.setCursor(0, 1);
+  lcd.clear();
+  lcd.print("Angle: ");
+  lcd.print(val);
+  delay(100);
+}
