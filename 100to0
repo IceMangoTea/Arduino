@@ -22,7 +22,7 @@ cp--;// increment the counter
 display.showNumberDec(cp);
 delay(1000);
 ButtonState = digitalRead(button);
-if (ButtonState == 0) {// if the button is pressed a second time
+if (ButtonState == 0 || cp == 0) {// if the button is pressed a second time
 test=0;// stop the clock
 ButtonState = digitalRead(button);
 delay(1000);
