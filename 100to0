@@ -1,0 +1,32 @@
+#include <TM1637Display.h>
+// Module connection pins (Digital Pins)
+#define CLK 2
+#define DIO 3
+TM1637Display display(CLK, DIO);
+const int button = 1;
+int ButtonState,cp,test;
+void setup()
+{
+pinMode(button, INPUT);
+ButtonState = 1;
+display.setBrightness(0x0f);
+}
+void loop()
+{
+ButtonState = digitalRead(button);
+if (ButtonState == 0) //if the button is pressed
+{ test=1;
+cp=101; // initialize the timer to 0
+while(test==1) {
+cp--;// increment the counter
+display.showNumberDec(cp);
+delay(1000);
+ButtonState = digitalRead(button);
+if (ButtonState == 0) {// if the button is pressed a second time
+test=0;// stop the clock
+ButtonState = digitalRead(button);
+delay(1000);
+}
+}
+}
+}
