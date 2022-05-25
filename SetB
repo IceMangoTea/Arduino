@@ -1,0 +1,52 @@
+#include <math.h>
+#include "rgb_lcd.h"
+rgb_lcd lcd;
+const int colorR = 255;
+const int colorG = 255;
+const int colorB = 255;
+const int B = 4275; // B value of the thermistor
+const int R0 = 100000; // R0 = 100k
+const int TempSensor = A0; // Grove - Temperature Sensor connect to A0
+int buttonState = 0;
+int led1 = 9 ;
+int led2 = 10;
+void setup()
+{
+Serial.begin(9600);
+lcd.begin(16, 2);
+lcd.setRGB(colorR, colorG, colorB);
+delay(1000);
+pinMode(8, INPUT);
+pinMode(9, OUTPUT);
+pinMode(10, OUTPUT);
+}
+
+void loop()
+{
+  buttonState = digitalRead(8);
+int a = analogRead(TempSensor);
+float R = (1023.0/a-1.0)*R0;
+// convert to deg C via datasheet
+float temperature = 1.0/(log(R/R0)/B+1/298.15)-273.15;
+lcd.setCursor(0,1);
+if (buttonState == HIGH)
+{
+lcd.setRGB(255,255,255);
+Serial.println("Button pushed");
+delay(1000);
+digitalWrite(led2, HIGH);
+lcd.print(temperature);
+}
+else {
+  lcd.clear();
+  lcd.setRGB(0, 0, 0);
+  Serial.println("Button no push");
+  delay(1000);
+  digitalWrite(led2, LOW);
+  digitalWrite(led1, HIGH);
+  delay(500);
+  digitalWrite(led1, LOW);
+  delay(500);
+  }
+
+}
